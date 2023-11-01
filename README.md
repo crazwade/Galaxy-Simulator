@@ -17,6 +17,7 @@
 - Vue 3
 - TypeScript
 - Pinia
+- Tailwind + Postcss
 
 ## 如何使用
 
