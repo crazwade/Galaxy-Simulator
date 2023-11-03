@@ -6,9 +6,18 @@ interface Planet {
   rotation: boolean;
 }
 
+interface MenuButton {
+  name: string;
+  image: string;
+}
+
 export const usePlanetStore = defineStore({
   id: "planets",
-  state: (): { planets: Planet[] } => ({
+  state: (): {
+    planets: Planet[];
+    menu: MenuButton[];
+    menuAreaVisable: boolean;
+  } => ({
     planets: [
       {
         id: 0,
@@ -22,7 +31,22 @@ export const usePlanetStore = defineStore({
         id: 2,
         rotation: true,
       }
-    ]
+    ],
+    menu: [
+      {
+        name: "新增",
+        image: "src/assets/icon/plus.png",
+      },
+      {
+        name: "調整",
+        image: "src/assets/icon/adjust.png",
+      },
+      {
+        name: "設定",
+        image: "src/assets/icon/settings.png",
+      }
+    ],
+    menuAreaVisable: true,
   }),
   actions: {
     addPlanet(planet: Planet) {
@@ -40,25 +64,6 @@ export const usePlanetStore = defineStore({
       if (planet) {
         planet.rotation = !planet.rotation;
       }
-    }
+    },
   }
 });
-
-
-// 在組件中使用 store
-// export default {
-//   setup() {
-//     const planetStore = usePlanetStore();
-
-//     // 新增星球
-//     planetStore.addPlanet({ id: "1", image: "/path/to/image.jpg", rotation: false });
-
-//     // 刪除星球
-//     planetStore.removePlanet("1");
-
-//     // 旋轉星球
-//     planetStore.rotatePlanet("1");
-
-//     return { planets: planetStore.$state.planets };
-//   }
-// };
