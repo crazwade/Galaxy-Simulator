@@ -1,32 +1,23 @@
 <template>
   <div>
     <div
-      v-show="props.visable"
       class="h-full w-full flex"
     >
-      <MenuButton
-        v-for="(button, index) in props.menu"
-        :key="button.name"
-        :button="button"
-        :index="index"
-        :active-button="activeButton"
-        @menuOpen="handleMenuOpen"
-      />
-    </div>
-    <div
-      v-show="!props.visable"
-      class="h-full w-full flex"
-    >
-      <MenuButton
-        v-for="(button, index) in props.menu"
-        v-show="button.name === activeButton"
-        :key="button.name"
-        :button="button"
-        :index="index"
-        :active-button="activeButton"
-        @menuOpen="handleMenuOpen"
-      />
-      <div class=" h-full w-2/3 bg-slate-400">
+      <TransitionGroup name="buttons">
+        <MenuButton
+          v-for="(button, index) in props.menu"
+          v-show="button.name === activeButton || props.visable"
+          :key="button.name"
+          :button="button"
+          :index="index"
+          :active-button="activeButton"
+          @open="handleMenuOpen"
+        />
+      </TransitionGroup>
+      <div
+        v-if="settingAreaVisable"
+        class=" h-full w-2/3 bg-slate-400"
+      >
         test
       </div>
     </div>
@@ -48,18 +39,32 @@ const props = defineProps<{
 const emit = defineEmits(["menuOpen"]);
 
 const activeButton = ref("display");
+const settingAreaVisable = ref(false);
 
 const handleMenuOpen = (buttonName: string) => {
   emit("menuOpen");
 
   if (buttonName === activeButton.value) {
     activeButton.value = "display";
+    settingAreaVisable.value = false;
     return;
   }
 
   activeButton.value = buttonName;
+
+  setTimeout(() => {
+    settingAreaVisable.value = true;
+  }, 200);
 };
 </script>
 
 <style scoped>
+.buttons-enter-active,
+.buttons-leave-active {
+  transition: all 0.2s linear;
+}
+.buttons-enter-from,
+.buttons-leave-to {
+  opacity: 0;
+}
 </style>

@@ -32,7 +32,7 @@ const props = defineProps({
   }
 });
 
-const emit = defineEmits(["menuOpen"]);
+const emit = defineEmits(["open"]);
 
 const bgColor = computed(() => {
   switch (props.index) {
@@ -46,6 +46,6 @@ const bgColor = computed(() => {
 });
 
 const handleClick = (buttonName: string) => {
-  emit("menuOpen", buttonName);
+  emit("open", buttonName);
 };
 </script>
