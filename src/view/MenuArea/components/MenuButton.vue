@@ -2,11 +2,11 @@
   <div
     class="h-full w-1/3 cursor-pointer flex flex-col justify-evenly items-center pt-2 pb-2"
     :class="bgColor"
+    @click="handleClick(button.name)"
   >
     <img
       class=" h-1/2 w-auto"
       :src="button.image"
-      @click="handleClick(button.name)"
     >
     <div class=" font-extrabold text-4xl mt-5 text-gray-50">
       {{ button.name }}
